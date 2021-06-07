@@ -108,8 +108,8 @@ function print(jsonData,i) {
   link=jsonData[i].flag;
   table.append(
     "<tr onclick=callModal(this)>" +
-    "<td>" + i + "</td>" +
-    "<td><svg xmlns=link width=60 height=40>" +"</svg></td>"+
+    // "<td>" + i + "</td>" +
+    "<td><img src=link width=60 height=40>" +"</img></td>"+
     "<td >" + jsonData[i].name + "</div></td>" +
     "<td>" + jsonData[i].alpha2Code + "</td>" +
     "<td>" + jsonData[i].alpha3Code + "</td>" +
