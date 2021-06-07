@@ -80,21 +80,44 @@ $(document).ready(function () {
     //     // alert("第"   (trSeq   1)   "行，第"   (tdSeq   1)   "列");
     //     console.log(tdSeq+' '+trSeq);
     //     });
-    // });
+    });
 });
+
+function processFormData() {
+  const nameElement = document.getElementById("name");
+  const name = nameElement.value;
+  console.log(name);
+  console.log(fuzzyQuery(name));
+}
+function fuzzyQuery() {
+  var arr = [];
+  const nameElement = document.getElementById("name");
+  const keyWord = nameElement.value;
+  console.log(keyWord);
+  for (var i = 0; i < jsonData.length; i++) {
+    if (jsonData[i].name.indexOf(keyWord) >= 0) {
+      arr.push(jsonData[i]);
+    }
+  }
+  table.empty();
+  for(var i=0;i<arr.length;i++){
+    print(arr,i);
+  }
+  console.log(arr);
+}
 
 function goInsortFun(sta, limit, max_size) {
   for (var i = sta; i < limit; i++) {
-    print(i);
+    print(jsonData,i);
   }
  
 }
 function goDesortFun(sta, limit, max_size) {
   for (var i = sta ; i >= limit; i--) {
-    print(i);
+    print(jsonData,i);
   }
 }
-function print(i) {
+function print(jsonData,i) {
   var countryName = jsonData[i].name;
   indexNum = i;
   table.append(
@@ -153,6 +176,8 @@ function arrToString(arr) {
   var obj = arr[0];
   return objToString(obj);
 }
+
+
 
 
 

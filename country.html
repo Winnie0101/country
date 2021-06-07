@@ -16,11 +16,14 @@
 
 <body>
     <h1>國家目錄</h1>
-    <div class="search"></div>
-    <div class="sort">
-        <button id='sortBtn' value="ON">正序/倒序</button>
-        <!-- <button id='desortBtn'>倒序</button> -->
+    <div class="search">
+        <input type="text" id='name' placeholder="請輸入關鍵詞">
+        <input type='button' name='submit' value='送出' onclick='fuzzyQuery();' />
     </div>
+    <!-- <div class="sort">
+        <button id='sortBtn' value="ON">正序/倒序</button>
+        <button id='desortBtn'>倒序</button>
+    </div> -->
 
 
     <div class="list" id='list'>
