@@ -19,7 +19,7 @@ $(document).ready(function () {
       jsonData = data;
       const max_size = jsonData.length;
       console.log(max_size);
-      console.log(jsonData);
+      // console.log(jsonData);
       goInsortFun(sta, elements_per_page, max_size);
       $('#countryName').click(function () {
         table.empty();
@@ -72,21 +72,6 @@ $(document).ready(function () {
           console.log(first + ' -pre- ' + last);
         }
       });
-      // console.log('tablelength '+jsonData.length);
-      // for(var i=0;i<jsonData.length;i++){
-      //   let cName=jsonData[i].name;
-      //   cName.click(function(){
-      //     callModal(i)
-      //   })
-      // }
-    //   $(".cName").click(function(){
-    //     console.log(111111);
-    //     var tdSeq = $(this).parent().find("td").index($(this)[0]);
-    //     // var trSeq = $(this).parent().parent().find("tr").index($(this).parent()[0]);
-    //     var trSeq = $(this).index();
-    //     // alert("第"   (trSeq   1)   "行，第"   (tdSeq   1)   "列");
-    //     console.log(tdSeq+' '+trSeq);
-    //     });
     });
 });
 
@@ -120,9 +105,11 @@ function goDesortFun(sta, limit, max_size) {
   }
 }
 function print(jsonData,i) {
+  link=jsonData[i].flag;
   table.append(
     "<tr onclick=callModal(this)>" +
     "<td>" + i + "</td>" +
+    "<td><svg xmlns=link width=60 height=40>" +"</svg></td>"+
     "<td >" + jsonData[i].name + "</div></td>" +
     "<td>" + jsonData[i].alpha2Code + "</td>" +
     "<td>" + jsonData[i].alpha3Code + "</td>" +
