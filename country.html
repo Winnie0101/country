@@ -17,40 +17,83 @@
 <body>
     <h1>國家目錄</h1>
     <div class="search"></div>
+    <div class="sort">
+        <button id='sortBtn' value="ON">正序/倒序</button>
+        <!-- <button id='desortBtn'>倒序</button> -->
+    </div>
 
-    
-        <div class="list" id='list'>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <!-- <th>國旗</th> -->
-                        <th>國家名稱</th>
-                        <th>2位國家代碼</th>
-                        <th>3位國家代碼</th>
-                        <th>母語名稱</th>
-                        <th>替代國家名稱</th>
-                        <th>國際電話區號</th>
 
-                    </tr>
-                </thead>
-                <tbody id='countryData'>
-                    <div class="countryFlag"></div>
-                    <!-- <tr>
-                        <!-- <th>國旗</th> -->
-                        <th><div id="countryName"></div></th>
-                        <th><div id="alpha2Code"></div></th>
-                        <th><div id="alpha3Code"></div></th>
-                        <th><div id="nativeName"></div></th>
-                        <th><div id="altSpellings"></div></th>
-                        <th><div id="callingCodes"></div></th>
+    <div class="list" id='list'>
+        <table class="table">
+            <thead>
+                <tr>
+                    <!-- <th>國旗</th> -->
+                    <th>num</th>
+                    <th>
+                        <div id="countryName">國家名稱</div>
+                    </th>
+                    <th>2位國家代碼</th>
+                    <th>3位國家代碼</th>
+                    <th>母語名稱</th>
+                    <th>替代國家名稱</th>
+                    <th>國際電話區號</th>
 
-                    </tr> -->
-                </tbody>
-            </table>
-            <span id="nextValue">next</span><br><span id="PreValue">Pre</span>
-            
+                </tr>
+            </thead>
+            <tbody id='countryData'>
+                <div class="countryFlag"></div>
+                 <!-- <tr>
+                        <th>國旗</th>
+                        <td><div id="num"></div></td>
+                        <td><div id="countryName"></div></td>
+                        <td><div id="alpha2Code"></div></td>
+                        <td><div id="alpha3Code"></div></td>
+                        <td><div id="nativeName"></div></td>
+                        <td><div id="altSpellings"></div></td>
+                        <td><div id="callingCodes"></div></td>
+
+                    </tr>  -->
+            </tbody>
+        </table>
+        <button id="PreValue">Pre</button>
+        <button id="nextValue">next</button>
+        <!-- （Modal） -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">modal-title</h4>
+                    </div>
+                    <div class="modal-body" id="modal-body">
+                        <div id="area">a</div>
+                        <div id="borders">a</div>
+                        <div id="capital">a</div>
+                        <div id="cioc">a</div>
+                        <div id="currencies">a</div>
+                        <div id="demonym">a</div>
+                        <div id="gini">a</div>
+                        <div id="languages">a</div>
+                        <div id="latlng">a</div>
+                        <div id="numericCode">a</div>
+                        <div id="population">a</div>
+                        <div id="region">a</div>
+                        <div id="regionalBlocs">a</div>
+                        <div id="subregion">a</div>
+                        <div id="timezones">a</div>
+                        <div id="topLevelDomain">a</div>
+                        <div id="translations">a</div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick='hideModal();'>close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
         </div>
-    
+
+    </div>
+
 
 
     </div>
