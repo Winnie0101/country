@@ -1,12 +1,16 @@
- 
+
 
 const jsonUrl = 'https://restcountries.eu/rest/v2/all';
 var table = $('#countryData');
+var modalTitle = $('#myModalLabel');
 let jsonData = {};
-// const max_size = jsonData.length;
 var sta = 0;
 var elements_per_page = 25;
 var limit = elements_per_page;
+var first = 0; //first row in page
+var last = 25; //last row in page
+var sort = 'insort';
+
 $(document).ready(function () {
   fetch(jsonUrl, { method: 'get' })
     .then((response) => {
@@ -15,85 +19,141 @@ $(document).ready(function () {
       jsonData = data;
       const max_size = jsonData.length;
       console.log(max_size);
-      goFun(sta, limit);
-      $('#nextValue').click(function () {
-        var next = limit;
-        if (max_size >= next) {
-          limit = limit + elements_per_page;
-          table.empty();
-          console.log(next + ' -next- ' + limit);
-          goFun(next, limit);
+      console.log(jsonData);
+      goInsortFun(sta, elements_per_page, max_size);
+      $('#countryName').click(function () {
+        table.empty();
+        if (sort == 'insort') {
+          sort = 'desort';
+          first = 249;
+          last = 225;
+          goDesortFun(first, last, max_size);
+          console.log(sort);
         }
+        else if (sort == 'desort') {
+          sort = 'insort';
+          first = 0;
+          last = 25;
+          goInsortFun(sta, elements_per_page, max_size);
+          console.log(sort);
+        }
+      });
+      $('#nextValue').click(function () {        
+        if (sort == 'insort'&& first<225) {
+          table.empty();
+          first += 25;
+          last += 25;
+          goInsortFun(first, last, max_size);
+          console.log(first + ' -next- ' + last);
+        }
+        else if (sort == 'desort' && last>0) {
+          table.empty();
+          first -= 25;
+          last -= 25;
+          goDesortFun(first, last, max_size);
+          console.log(first + ' -next- ' + last);
+        }
+
       });
       $('#PreValue').click(function () {
-        var pre = limit - (2 * elements_per_page);
-        if (pre >= 0) {
-          limit = limit - elements_per_page;
-          console.log(pre + ' -pre- ' + limit);
+        
+        if(sort=='insort' && first>=25 ){
           table.empty();
-          goFun(pre, limit);
+          first -= 25;
+          last -= 25;
+          goInsortFun(first, last, max_size);
+          console.log(first + ' -pre- ' + last);
+        }
+        else if(sort=='desort' && first<=225){
+          table.empty();
+          first += 25;
+          last += 25;
+          goDesortFun(first, last, max_size);
+          console.log(first + ' -pre- ' + last);
         }
       });
-
-    })
-    
-
-
+    //   $(".cName").click(function(){
+    //     console.log(111111);
+    //     var tdSeq = $(this).parent().find("td").index($(this)[0]);
+    //     // var trSeq = $(this).parent().parent().find("tr").index($(this).parent()[0]);
+    //     var trSeq = $(this).index();
+    //     // alert("第"   (trSeq   1)   "行，第"   (tdSeq   1)   "列");
+    //     console.log(tdSeq+' '+trSeq);
+    //     });
+    // });
 });
-function goFun(sta, limit) {
+
+function goInsortFun(sta, limit, max_size) {
   for (var i = sta; i < limit; i++) {
-    // $('#name').append(jsonData[i].name);
-    // $('#alpha2Code').append(jsonData[i].alpha2Code);
-    // $('#alpha3Code').append(jsonData[i].alpha3Code);
-    // $('#nativeName').append(jsonData[i].nativeName);
-    // $('#altSpellings').append(jsonData[i].altSpellings);
-    // $('#callingCodes').append(jsonData[i].callingCodes);
-    table.append(
-      "<tr>" +
-      // "<td>" + "<svg xml=flagSvg.src ></svg>" + "</td>" +
-      "<td>" + jsonData[i].name + "</td>" +
-      "<td>" + jsonData[i].alpha2Code + "</td>" +
-      "<td>" + jsonData[i].alpha3Code + "</td>" +
-      "<td>" + jsonData[i].nativeName + "</td>" +
-      "<td>" + jsonData[i].altSpellings + "</td>" +
-      "<td>" + jsonData[i].callingCodes + "</td>" +
-      "</tr>");
+    print(i);
   }
+ 
+}
+function goDesortFun(sta, limit, max_size) {
+  for (var i = sta ; i >= limit; i--) {
+    print(i);
+  }
+}
+function print(i) {
+  var countryName = jsonData[i].name;
+  indexNum = i;
+  table.append(
+    "<tr>" +
+    "<td>" + i + "</td>" +
+    "<td ><div class='cName'>" + jsonData[i].name + "</div></td>" +
+    "<td>" + jsonData[i].alpha2Code + "</td>" +
+    "<td>" + jsonData[i].alpha3Code + "</td>" +
+    "<td>" + jsonData[i].nativeName + "</td>" +
+    "<td>" + jsonData[i].altSpellings + "</td>" +
+    "<td>" + jsonData[i].callingCodes + "</td>" +
+    "</tr>");
+    
+}
+function callModal(i) {
+  currenciesData = arrToString(jsonData[i].currencies);
+  languagesData = arrToString(jsonData[i].languages);
+  regionalBlocsData = arrToString(jsonData[i].regionalBlocs);
+  translationsData = objToString(jsonData[i].translations);
+  console.log(i);
+  document.getElementById("myModalLabel").innerHTML = jsonData[i].name;
+  document.getElementById("area").innerHTML = "area : " + jsonData[i].area;
+  document.getElementById("borders").innerHTML = "borders : " + jsonData[i].borders;
+  document.getElementById("capital").innerHTML = "capital : " + jsonData[i].capital;
+  document.getElementById("cioc").innerHTML = "cioc : " + jsonData[i].cioc;
+  document.getElementById("currencies").innerHTML = "currencies : " + currenciesData;
+  document.getElementById("demonym").innerHTML = "demonym : " + jsonData[i].demonym;
+  document.getElementById("gini").innerHTML = "gini : " + jsonData[i].gini;
+  document.getElementById("languages").innerHTML = "languages : " + languagesData;
+  document.getElementById("latlng").innerHTML = "latlng : " + jsonData[i].latlng;
+  document.getElementById("numericCode").innerHTML = "numericCode : " + jsonData[i].numericCode;
+  document.getElementById("population").innerHTML = "population : " + jsonData[i].population;
+  document.getElementById("region").innerHTML = "region : " + jsonData[i].region;
+  document.getElementById("regionalBlocs").innerHTML = "regionalBlocs : " + regionalBlocsData;
+  document.getElementById("subregion").innerHTML = "subregion : " + jsonData[i].subregion;
+  document.getElementById("timezones").innerHTML = "timezones : " + jsonData[i].timezones;
+  document.getElementById("topLevelDomain").innerHTML = "topLevelDomain : " + jsonData[i].topLevelDomain;
+  document.getElementById("translations").innerHTML = "translations : " + translationsData;
+
+  $('#myModal').modal('show');
+
+
+}
+function hideModal() {
+  $('#myModal').modal('hide');
+}
+function objToString(obj) {
+  var description = "";
+  for (var i in obj) {
+    description += i + "=" + obj[i] + "  ";
+  }
+  console.log(description);
+  return description;
+}
+function arrToString(arr) {
+  var obj = arr[0];
+  return objToString(obj);
 }
 
 
-var dataUrl = 'https://restcountries.eu/rest/v2/all';
-// $(document).ready(function () {
-//   $.ajax({
-//     url: 'https://restcountries.eu/rest/v2/all',
-//     type: 'GET',
-//     dataType: 'json',
-//     success: function (info) {
-//       $('#countryData').html();
-//       console.log(info.length);
-//       total_len = info.length;
-//       for (i = 0; i < total_len; i++) {
-//         var flagSvg = document.querySelector(".countryFlag");
-//         flagSvg.src = info[i].flag;
-//         // flagSvg.style.backgroundImage =flagSvg.src;
-//         // console.log(info[i].flag);
-//         $("#countryData").append(
-//           "<tr>" +
-//           "<td>" + "<svg xml=flagSvg.src ></svg>" + "</td>" +
-//           "<td>" + info[i].name + "</td>" +
-//           "<td>" + info[i].alpha2Code + "</td>" +
-//           "<td>" + info[i].alpha3Code + "</td>" +
-//           "<td>" + info[i].nativeName + "</td>" +
-//           "<td>" + info[i].altSpellings + "</td>" +
-//           "<td>" + info[i].callingCodes + "</td>" +
-//           "</tr>"
-//         )
-//       }
-//     },
-//     error: err => {
-//       console.log(err)
-//     },
-//   });
 
-// });
 
