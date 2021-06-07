@@ -72,6 +72,13 @@ $(document).ready(function () {
           console.log(first + ' -pre- ' + last);
         }
       });
+      // console.log('tablelength '+jsonData.length);
+      // for(var i=0;i<jsonData.length;i++){
+      //   let cName=jsonData[i].name;
+      //   cName.click(function(){
+      //     callModal(i)
+      //   })
+      // }
     //   $(".cName").click(function(){
     //     console.log(111111);
     //     var tdSeq = $(this).parent().find("td").index($(this)[0]);
@@ -83,12 +90,7 @@ $(document).ready(function () {
     });
 });
 
-function processFormData() {
-  const nameElement = document.getElementById("name");
-  const name = nameElement.value;
-  console.log(name);
-  console.log(fuzzyQuery(name));
-}
+
 function fuzzyQuery() {
   var arr = [];
   const nameElement = document.getElementById("name");
@@ -118,12 +120,10 @@ function goDesortFun(sta, limit, max_size) {
   }
 }
 function print(jsonData,i) {
-  var countryName = jsonData[i].name;
-  indexNum = i;
   table.append(
-    "<tr>" +
+    "<tr onclick=callModal(this)>" +
     "<td>" + i + "</td>" +
-    "<td ><div class='cName'>" + jsonData[i].name + "</div></td>" +
+    "<td >" + jsonData[i].name + "</div></td>" +
     "<td>" + jsonData[i].alpha2Code + "</td>" +
     "<td>" + jsonData[i].alpha3Code + "</td>" +
     "<td>" + jsonData[i].nativeName + "</td>" +
@@ -132,7 +132,9 @@ function print(jsonData,i) {
     "</tr>");
     
 }
-function callModal(i) {
+function callModal(cName) {
+  i=cName.rowIndex-1;
+  // console.log(cName);
   currenciesData = arrToString(jsonData[i].currencies);
   languagesData = arrToString(jsonData[i].languages);
   regionalBlocsData = arrToString(jsonData[i].regionalBlocs);
