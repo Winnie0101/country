@@ -19,7 +19,7 @@ $(document).ready(function () {
       jsonData = data;
       const max_size = jsonData.length;
       console.log(max_size);
-      console.log(jsonData);
+      // console.log(jsonData);
       goInsortFun(sta, elements_per_page, max_size);
       $('#countryName').click(function () {
         table.empty();
@@ -72,35 +72,45 @@ $(document).ready(function () {
           console.log(first + ' -pre- ' + last);
         }
       });
-    //   $(".cName").click(function(){
-    //     console.log(111111);
-    //     var tdSeq = $(this).parent().find("td").index($(this)[0]);
-    //     // var trSeq = $(this).parent().parent().find("tr").index($(this).parent()[0]);
-    //     var trSeq = $(this).index();
-    //     // alert("第"   (trSeq   1)   "行，第"   (tdSeq   1)   "列");
-    //     console.log(tdSeq+' '+trSeq);
-    //     });
-    // });
+    });
 });
+
+
+function fuzzyQuery() {
+  var arr = [];
+  const nameElement = document.getElementById("name");
+  const keyWord = nameElement.value;
+  console.log(keyWord);
+  for (var i = 0; i < jsonData.length; i++) {
+    if (jsonData[i].name.indexOf(keyWord) >= 0) {
+      arr.push(jsonData[i]);
+    }
+  }
+  table.empty();
+  for(var i=0;i<arr.length;i++){
+    print(arr,i);
+  }
+  console.log(arr);
+}
 
 function goInsortFun(sta, limit, max_size) {
   for (var i = sta; i < limit; i++) {
-    print(i);
+    print(jsonData,i);
   }
  
 }
 function goDesortFun(sta, limit, max_size) {
   for (var i = sta ; i >= limit; i--) {
-    print(i);
+    print(jsonData,i);
   }
 }
-function print(i) {
-  var countryName = jsonData[i].name;
-  indexNum = i;
+function print(jsonData,i) {
+  link=jsonData[i].flag;
   table.append(
-    "<tr>" +
+    "<tr onclick=callModal(this)>" +
     "<td>" + i + "</td>" +
-    "<td ><div class='cName'>" + jsonData[i].name + "</div></td>" +
+    "<td><svg xmlns=link width=60 height=40>" +"</svg></td>"+
+    "<td >" + jsonData[i].name + "</div></td>" +
     "<td>" + jsonData[i].alpha2Code + "</td>" +
     "<td>" + jsonData[i].alpha3Code + "</td>" +
     "<td>" + jsonData[i].nativeName + "</td>" +
@@ -109,7 +119,9 @@ function print(i) {
     "</tr>");
     
 }
-function callModal(i) {
+function callModal(cName) {
+  i=cName.rowIndex-1;
+  // console.log(cName);
   currenciesData = arrToString(jsonData[i].currencies);
   languagesData = arrToString(jsonData[i].languages);
   regionalBlocsData = arrToString(jsonData[i].regionalBlocs);
@@ -153,6 +165,8 @@ function arrToString(arr) {
   var obj = arr[0];
   return objToString(obj);
 }
+
+
 
 
 
